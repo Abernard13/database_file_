@@ -132,11 +132,11 @@ void new_employee() {
 
         // Check if employee already exists
         if (search(empId) != nullptr) {
-            cout << "Employee with ID " << empId << " already exists!\n";
+            cout << "Employee ID already exists! Try again." << endl;
             continue;
         }
 
-        // Enter employee details
+        // Get employee details
         Person p;
         p.id = empId;
         cout << "Enter first name: ";
@@ -145,32 +145,27 @@ void new_employee() {
         cin >> p.lastName;
         cout << "Enter income: ";
         cin >> p.income;
-
+        
         // Save data to file
-        cout << "Saving data...\n";
         write_data(p);
     }
 }
 
-// Main function
 int main() {
-    file.open(filename, ios::in | ios::out | ios::app);
-
-    // If file doesn't exist, create it
+    file.open(filename, ios::in | ios::out | ios::app); // open file for read and write
     if (!file) {
-        file.open(filename, ios::out);
+        file.open(filename, ios::out); // create the file
         file.close();
         file.open(filename, ios::in | ios::out | ios::app);
     }
 
-    // Menu
     int option = -1;
     while (true) {
         cout << "\n*** Menu ***" << endl;
-        cout << "1) New employee\n";
-        cout << "2) Search employee information\n";
-        cout << "3) List employees\n";
-        cout << "4) Exit\n";
+        cout << "1) New employee" << endl;
+        cout << "2) Search employee information" << endl;
+        cout << "3) List employees" << endl;
+        cout << "4) Exit" << endl;
         cout << "Option: ";
         cin >> option;
 
@@ -178,11 +173,9 @@ int main() {
             case 1: new_employee(); break;
             case 2: get_employee(); break;
             case 3: list(); break;
-            case 4: 
-                file.close();
-                return 0;
-            default:
-                cout << "Invalid option. Try again." << endl;
+            case 4: file.close(); return 0;
+            default: cout << "Invalid option, try again." << endl;
         }
     }
+    return 0;
 }
